@@ -6,6 +6,8 @@ const apikey = vantar apalykil;
 
 const instance = axios.create({ baseURL, timeout, apikey });
 
+// notað til þess að ná í frekari upplýsingar um myndir svosem leikara, leikstjóra aðrar tengdar myndir etc
+
 /**
  * Fetches all available channels from endpoint, returns a promise that when
  * resolved returns an array, e.g.:

@@ -10,6 +10,13 @@ let headers = { x-access-token: token}
 
 let instance = axios.create({ baseURL, timeout, headers });
 
+const data = {
+  username: '';
+  password: '':
+};
+
+const apiKEYGen = axios.create ({ baseURL, timeout, data });
+
 /**
  * Fetches all available channels from endpoint, returns a promise that when
  * resolved returns an array, e.g.:
@@ -38,7 +45,7 @@ function cinemas() {
 }
 
 function newAPIKey() {
-
+  return apiKEYGen.get('/authenticate');
 }
 
 module.exports = {

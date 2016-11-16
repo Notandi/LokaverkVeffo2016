@@ -10,19 +10,29 @@ const moviedata = require('./moviedata');
 router.get('/', (req, res, next) => {
   movies.movies
     .then((result) => {
-      const movies = result.data
+      const movies = result.data;
     })
     .catch((error) => {
 
     });
 });
 
-router.get('/', (req, res, next) => {
+router.get('/upcoming', (req, res, next) => {
   movies.upcoming
     .then((result) => {
-
+      const upcoming = result.data;
     })
     .catch((error) => {
+
+    });
+});
+
+router.get('/cinemas', (req, res, next) => {
+  movies.cinemas
+    .then((result) => {
+      const cinemas = result.data;
+    })
+    .catch((error) =>{
 
     });
 });
