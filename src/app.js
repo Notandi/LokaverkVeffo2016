@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const routes = require('./routes');
+const routes = require('./routes/routes');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

@@ -3,9 +3,9 @@ const express = require('express');
 
 const router = express.Router();
 
-const movies = require('./movies');
+const movies = require('../axios/movies');
 
-const moviedata = require('./moviedata');
+const moviedata = require('../axios/moviedata');
 
 router.get('/', (req, res, next) => {
   movies.movies

@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 const baseURL = process.env.BASEURL2; // Sækja úr environment breytu
 
 const timeout = 10000;
