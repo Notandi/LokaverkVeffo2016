@@ -1,22 +1,27 @@
 const axios = require('axios');
 
+const NanoTimer = require('nanotimer');
+
 const baseURL = process.env.BASEURL; // Sækja úr environment breytu
 
-const timeout = 10000;
+let headers;
 
-let token;
-
-let headers = { x-access-token: token}
-
-let instance = axios.create({ baseURL, timeout, headers });
+let instance = axios.create({ baseURL, headers });
 
 const data = {
-  username: '';
-  password: '':
+  username: "apameistarinn",
+  password: "gussiskassi",
 };
 
-const apiKEYGen = axios.create ({ baseURL, timeout, data });
+const apiKEYGen = axios.create ({baseURL});
 
+const timer = new NanoTimer();
+
+let time = '86400s'; //the time we wait before regenrating the api keys
+
+// timer fall sem að sækjir nýja api lykla á 24 tíma fresti
+timer.setInterval(generateNewAPIKey, '', time);
+generateNewAPIKey();
 /**
  * Fetches all available channels from endpoint, returns a promise that when
  * resolved returns an array, e.g.:
@@ -25,33 +30,37 @@ const apiKEYGen = axios.create ({ baseURL, timeout, data });
  * @returns {Promise} - Promise with available channels when resolved
  */
 function movies() {
-  return instance.get('/movies/');
+  return instance.get('/movies/', headers);
 }
 function upcoming() {
-  return instance.get('/upcoming/');
+  return instance.get('/upcoming/', headers);
 }
 
-//mögulega sleppa poster .því hægt að fá frá moviedb
-// function posters(imdbid) {
-//   return instance.get('/posters' + '?' + imdbid);
-// }
-
 function genres() {
-  return instance.get('/genres');
+  return instance.get('/genres', headers);
 }
 
 function cinemas() {
-  return instance.get('/cinemas');
+  return instance.get('/cinemas', headers);
 }
 
 function newAPIKey() {
-  return apiKEYGen.get('/authenticate');
+  return apiKEYGen.post('/authenticate', data);
+}
+
+function generateNewAPIKey(){
+  newAPIKey()
+  .then((result) => {
+    headers = {'x-access-token': result.data.token};
+    instance = axios.create({baseURL, headers});
+  })
+  .catch((error) => {
+  });
 }
 
 module.exports = {
   movies,
   upcoming,
-  posters,
   genres,
   cinemas,
   newAPIKey,
