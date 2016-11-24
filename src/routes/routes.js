@@ -10,7 +10,7 @@ const moviedata = require('../axios/moviedata');
 router.get('/', (req, res, next) => {
   movies.movies()
     .then((result) => {
-      console.log(result.data);
+      console.log(result.data[0].omdb);
       res.send("goodjob");
     })
     .catch((error) => {

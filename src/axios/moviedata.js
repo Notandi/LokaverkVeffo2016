@@ -1,18 +1,15 @@
-//moviedb api
 const axios = require('axios');
 
 const baseURL = process.env.BASEURL2; // Sækja úr environment breytu
 
 const timeout = 10000;
 
-//API Key (v3 auth)
 const api_key = '?api_key=3c8664074077c3ccb04b8bd51b3c9167';
-
 
 const instance = axios.create({ baseURL, timeout});
 
 // notað til þess að ná í frekari upplýsingar um myndir svosem leikara, leikstjóra aðrar tengdar myndir etc
- 
+
 /**
  * Fetches all available channels from endpoint, returns a promise that when
  * resolved returns an array, e.g.:
@@ -21,26 +18,30 @@ const instance = axios.create({ baseURL, timeout});
  * @returns {Promise} - Promise with available channels when resolved
  */
 
+function find(id) {
+  // leitar að mynd útfrá imdb_id sem að fæst útfrá kvimyndir.is apa tt bætt fyrir framan því öll imdb movie id eru með tt fyrir framan
+  return instance.get( '/find/' + 'tt' + id + api_key + '&external_source=imdb_id')
+}
 function movie(id) {
   return instance.get('/movie/' + id + api_key);
 }
 
 function recommended(id) {
-  return instance.get('/movie/' + id + '/recommendations');
+  return instance.get('/movie/' + id + '/recommendations'+ api_key);
 }
 
 function credit(id) {
-  return instance.get('/movie/' + id +'/credits' );
+  return instance.get('/movie/' + id +'/credits' + api_key);
 }
 
 function person(id) {
-  return instance.get('/person/' + id);
+  return instance.get('/person/' + id + api_key);
 }
 function personimage(id) {
-  return instance.get('/person' + id + 'images');
+  return instance.get('/person' + id + 'images' + api_key);
 }
 function personcredit(id) {
-  return instance.get ('/person/' + id  + '/movie_credits');
+  return instance.get ('/person/' + id  + '/movie_credits' + api_key);
 }
 
 ///hugmynd nota backdrops sem background fyrir myndasíðuna
@@ -51,10 +52,11 @@ function personcredit(id) {
 // sýna myndir af leikurum
 
 module.exports = {
+  find,
   movie,
   recommended,
   credit,
   person,
   personimage,
-  personcredit
+  personcredit,
 };
