@@ -6,12 +6,13 @@ const baseURL = process.env.BASEURL2; // Sækja úr environment breytu
 const timeout = 10000;
 
 //API Key (v3 auth)
-const apikey = 3c8664074077c3ccb04b8bd51b3c9167;
+const api_key = '?api_key=3c8664074077c3ccb04b8bd51b3c9167';
 
-const instance = axios.create({ baseURL, timeout, apikey });
+
+const instance = axios.create({ baseURL, timeout});
 
 // notað til þess að ná í frekari upplýsingar um myndir svosem leikara, leikstjóra aðrar tengdar myndir etc
-
+ 
 /**
  * Fetches all available channels from endpoint, returns a promise that when
  * resolved returns an array, e.g.:
@@ -19,8 +20,9 @@ const instance = axios.create({ baseURL, timeout, apikey });
  *
  * @returns {Promise} - Promise with available channels when resolved
  */
+
 function movie(id) {
-  return instance.get('/movie/' + id);
+  return instance.get('/movie/' + id + api_key);
 }
 
 function recommended(id) {
@@ -49,5 +51,10 @@ function personcredit(id) {
 // sýna myndir af leikurum
 
 module.exports = {
-
+  movie,
+  recommended,
+  credit,
+  person,
+  personimage,
+  personcredit
 };

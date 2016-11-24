@@ -8,13 +8,17 @@ const movies = require('../axios/movies');
 const moviedata = require('../axios/moviedata');
 
 router.get('/', (req, res, next) => {
-  movies.movies
+  //Tekur in streng sem er id á myndina
+  moviedata.movie('550')
     .then((result) => {
-      const movies = result.data;
+      console.log("RESULT movie tmdb");
+      console.log(result);
     })
     .catch((error) => {
-
+      console.log('Error');
+      console.log(error);
     });
+    res.render('index', {title: 'Forsidan'})
 });
 
 router.get('/upcoming', (req, res, next) => {
