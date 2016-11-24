@@ -1,10 +1,12 @@
+//moviedb api
 const axios = require('axios');
 
 const baseURL = process.env.BASEURL2; // Sækja úr environment breytu
 
 const timeout = 10000;
 
-const apikey = vantar apalykil;
+//API Key (v3 auth)
+const apikey = 3c8664074077c3ccb04b8bd51b3c9167;
 
 const instance = axios.create({ baseURL, timeout, apikey });
 
