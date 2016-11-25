@@ -21,11 +21,11 @@ const timer = new NanoTimer();
 
 let time = '86400s'; //the time we wait before regenrating the api keys
 
-// // timer fall sem að sækjir nýtt token á 24 tíma fresti
-// timer.setInterval(generateNewToken, '', time);
-//
-// // generatar nýtt token útfrá api key í hvert skipti sem að kveikt er á server
-// generateNewToken();
+// timer fall sem að sækjir nýtt token á 24 tíma fresti
+timer.setInterval(generateNewToken, '', time);
+
+// generatar nýtt token útfrá api key í hvert skipti sem að kveikt er á server
+generateNewToken();
 /**
  * Fetches all available channels from endpoint, returns a promise that when
  * resolved returns an array, e.g.:

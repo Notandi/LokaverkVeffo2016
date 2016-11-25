@@ -14,46 +14,41 @@ router.get('/', (req, res, next) => {
 router.get('/movies', (req, res, next) => {
   movies.movies()
     .then((result) => {
-      console.log(result.data);
       res.send(result.data);
     })
     .catch((error) => {
-      console.log(error);
-      res.send("no");
     });
 });
 
 router.get('/upcoming', (req, res, next) => {
   movies.upcoming()
     .then((result) => {
-      console.log(result.data);
+      res.send(result.data);
     })
     .catch((error) => {
-
     });
 });
 
 router.get('/cinemas', (req, res, next) => {
   movies.cinemas()
     .then((result) => {
-      console.log(result.data);
+      res.send(result.data);
     })
     .catch((error) =>{
-
     });
 });
 
 router.get('/genres', (req, res, next) =>{
   movies.genres()
     .then((result) =>{
-      console.log(result.data);
+      res.send(result.data);
     })
     .catch((error) => {
-
     });
 })
 
 router.get('/movie/:id', (req, res, next) => {
+  let id = req.params.id;
 
 });
 
