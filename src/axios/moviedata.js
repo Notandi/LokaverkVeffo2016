@@ -22,7 +22,10 @@ function find(id) {
   // leitar að tmbd_id útfrá imdb_id sem að fæst útfrá kvimyndir.is apa tt bætt fyrir framan því öll imdb movie id eru með tt fyrir framan
   return instance.get( '/find/' + 'tt' + id + api_key + '&external_source=imdb_id')
 }
+
 function movie(id) {
+  console.log("id í moviedata");
+  console.log(id);
   return instance.get('/movie/' + id + api_key);
 }
 

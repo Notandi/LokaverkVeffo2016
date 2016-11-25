@@ -1,7 +1,29 @@
 $(document).ready(function() {
-  getMovies()
+  getMovies();
+  console.log("main.js fallið whats up in this biatch??!!");
+  let tala = 550;
+  getMovie({tala});
 });
 
+//THE MOVIE DATABASE functions
+let movie = [];
+function getMovie(movieId) {
+  $.post('/movie', movieId, function(resp) {
+  	console.log("resperinooo");
+    console.log(resp);
+    movie = resp;
+    displayMovie(resp);
+  });
+
+}
+
+function displayMovie(response) {
+  const movie = response
+  console.log("movie title:");
+  console.log(movie);
+}
+// Birtir allar myndir á forsíðu
+//birtir inn í divið með id-ið #content
 function showMovies(movieData){
   console.log(movieData);
   const sitecontent= $('#content');
@@ -18,7 +40,7 @@ function showMovies(movieData){
 
 
 }
-
+// Kvikmyndir.is api-inn
 function getMovies(){
   	$.ajax({
       url : 'http://localhost:3000/movies',
