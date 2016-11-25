@@ -2,7 +2,7 @@ const axios = require('axios');
 
 const baseURL = process.env.BASEURL2; // Sækja úr environment breytu
 
-const timeout = 10000;
+const timeout = 1000;
 
 const api_key = '?api_key=3c8664074077c3ccb04b8bd51b3c9167';
 
@@ -19,7 +19,7 @@ const instance = axios.create({ baseURL, timeout});
  */
 
 function find(id) {
-  // leitar að mynd útfrá imdb_id sem að fæst útfrá kvimyndir.is apa tt bætt fyrir framan því öll imdb movie id eru með tt fyrir framan
+  // leitar að tmbd_id útfrá imdb_id sem að fæst útfrá kvimyndir.is apa tt bætt fyrir framan því öll imdb movie id eru með tt fyrir framan
   return instance.get( '/find/' + 'tt' + id + api_key + '&external_source=imdb_id')
 }
 function movie(id) {

@@ -4,24 +4,28 @@ const NanoTimer = require('nanotimer');
 
 const baseURL = process.env.BASEURL; // Sækja úr environment breytu
 
+const timeout = 1000;
+
 let headers;
 
-let instance = axios.create({ baseURL, headers });
+let instance = axios.create({ baseURL, timeout});
 
 const data = {
   username: "apameistarinn",
   password: "gussiskassi",
 };
 
-const apiKEYGen = axios.create ({baseURL});
+const tokenGen = axios.create ({baseURL, timeout});
 
 const timer = new NanoTimer();
 
 let time = '86400s'; //the time we wait before regenrating the api keys
 
-// timer fall sem að sækjir nýja api lykla á 24 tíma fresti
-timer.setInterval(generateNewAPIKey, '', time);
-generateNewAPIKey();
+// timer fall sem að sækjir nýtt token á 24 tíma fresti
+timer.setInterval(generateNewToken, '', time);
+
+// generatar nýtt token útfrá api key í hvert skipti sem að kveikt er á server
+generateNewToken();
 /**
  * Fetches all available channels from endpoint, returns a promise that when
  * resolved returns an array, e.g.:
@@ -44,12 +48,12 @@ function cinemas() {
   return instance.get('/cinemas', headers);
 }
 
-function newAPIKey() {
-  return apiKEYGen.post('/authenticate', data);
+function newToken() {
+  return tokenGen.post('/authenticate', data);
 }
 
-function generateNewAPIKey(){
-  newAPIKey()
+function generateNewToken(){
+  newToken()
   .then((result) => {
     headers = {'x-access-token': result.data.token};
     instance = axios.create({baseURL, headers});
@@ -63,5 +67,4 @@ module.exports = {
   upcoming,
   genres,
   cinemas,
-  newAPIKey,
 };

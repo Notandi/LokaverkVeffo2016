@@ -19,25 +19,39 @@ router.get('/', (req, res, next) => {
     });
 });
 
-// router.get('/upcoming', (req, res, next) => {
-//   movies.upcoming
-//     .then((result) => {
-//       const upcoming = result.data;
-//     })
-//     .catch((error) => {
-//
-//     });
-// });
-//
-// router.get('/cinemas', (req, res, next) => {
-//   movies.cinemas
-//     .then((result) => {
-//       const cinemas = result.data;
-//     })
-//     .catch((error) =>{
-//
-//     });
-// });
+router.get('/upcoming', (req, res, next) => {
+  movies.upcoming()
+    .then((result) => {
+      console.log(result.data);
+    })
+    .catch((error) => {
+
+    });
+});
+
+router.get('/cinemas', (req, res, next) => {
+  movies.cinemas()
+    .then((result) => {
+      console.log(result.data);
+    })
+    .catch((error) =>{
+
+    });
+});
+
+router.get('/genres', (req, res, next) =>{
+  movies.genres()
+    .then((result) =>{
+      console.log(result.data);
+    })
+    .catch((error) => {
+
+    });
+})
+
+router.get('/movie/:id', (req, res, next) => {
+
+});
 
 router.get('*', (req, res, next) => {
   res.status(404).render('message', { message: 'oh no!',
