@@ -10,3 +10,20 @@ body {
   /*519*/
   padding : 2%;
 }
+.spinner {
+  
+  height: 28px;
+  width: 28px;
+  animation: rotate 0.8s infinite linear;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  border: 8px solid #fff;
+  border-right-color: transparent;
+  border-radius: 50%;
+}
+
+@keyframes rotate {
+  0%    { transform: rotate(0deg); }
+  100%  { transform: rotate(360deg); }
+}
