@@ -8,10 +8,14 @@ const movies = require('../axios/movies');
 const moviedata = require('../axios/moviedata');
 
 router.get('/', (req, res, next) => {
+  res.render('index');
+});
+
+router.get('/movies', (req, res, next) => {
   movies.movies()
     .then((result) => {
-      console.log(result.data[0].omdb);
-      res.send("goodjob");
+      console.log(result.data);
+      res.send(result.data);
     })
     .catch((error) => {
       console.log(error);
