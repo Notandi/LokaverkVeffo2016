@@ -34,4 +34,8 @@ Upplýsingar sem fást frá:
   vote_average: 8.1,
   vote_count: 5615 }
 
+til að birta myndir: https://image.tmdb.org/t/p/w500/
+https://image.tmdb.org/t/p/w500/
+https://image.tmdb.org/t/p/w500/
+
   .title .tagline .overview .runtime

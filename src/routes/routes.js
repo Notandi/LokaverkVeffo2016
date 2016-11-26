@@ -51,25 +51,66 @@ router.get('/genres', (req, res, next) =>{
 //TMDB sækja gögn um mynd
 router.post('/movie', function (req, res, next) {
   console.log("/movie routes");
-  console.log(req.body.tala);
   let id = req.body.tala;
   moviedata.movie(id)
     .then((result) => {
-      console.log("RESULT movie tmdb");
-      console.log(result.data);
       const movie = result.data;
       res.send(movie);
     })
     .catch((error) => {
-      console.log('Error');
+      console.log('Error router.post /movie');
       console.log(error);
     });
-})
+});
 
+//id er IMDB
 router.get('/movie/:id', (req, res, next) => {
+  //req.params eða req.body?
+  console.log('movie/:id fallið kallað!?"');
+  console.log(req.params.id);
   let id = req.params.id;
 
+  //finnd TMDB link út frá imdb
+  moviedata.find(id)
+    .then((result) => {
+      console.log("TMDB ID-IÐ?!!")
+      console.log(result.data.movie_results[0].id);
+      moviedata.movie(result.data.movie_results[0].id)
+        .then((result) => {
+          console.log('results frá TMDb <- IMDb');
+          console.log(result.data);
+          var info = result.data;
+          var imgURL = 'https://image.tmdb.org/t/p/w500/';
+          res.render('movie', {movie: info, path: imgURL});
+        })
+        .catch((error) => {
+          res.render('error', {error});
+        });
+    })
+    .catch((error) => {
+      res.render('error', {error});
+    });
+
+  // moviedata.movie(id)
+  //   .then((result) => {
+  //     const info = result.data;
+  //     res.render('movie', {film : info});
+  //   })
+  //   .catch((error) => {
+  //     res.render('error', {error});
+  //   });
+
+  // const fyrirsogn = texti + req.params.name;
+  // schedule.channel(req.params.name)
+  //   .then((result) => {
+  //     const dagskra = result.data.results;
+  //     res.render('channel', { title: fyrirsogn, channels: dagskra });
+  //   })
+  //   .catch((error) => {
+  //     res.render('error', { title: 'Oh no!', error });
+  //   });
 });
+
 
 router.get('*', (req, res, next) => {
   res.status(404).render('message', { message: 'oh no!',

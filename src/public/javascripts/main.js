@@ -21,12 +21,13 @@ $(document).ready(function() {
 let movie = [];
 function getMovie(movieId) {
   $.post('/movie', movieId, function(resp) {
-  	console.log("resperinooo");
-    console.log(resp);
     movie = resp;
     displayMovie(resp);
   });
+}
 
+function createMovie(){
+  const sitecontent= $('#movieContent')
 }
 
 // fjarlægir allt úr content divinu og setur spinner í gang
@@ -39,7 +40,7 @@ function loading(){
 }
 
 function displayMovie(response) {
-  const movie = response
+  const movie = response;
   console.log("movie title:");
   console.log(movie);
 }

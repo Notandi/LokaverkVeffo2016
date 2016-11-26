@@ -1,3 +1,22 @@
 body {
   background: black; 
 }
+p {
+  color: white;
+}
+
+.flexContainer {
+  display: flex;
+}
+.textOnImage {
+  position: absolute;
+  top: 10;
+  width: 100%;
+  color: purple;
+}
+
+.moviesBackground {
+  min-width: 100%;
+  position: relative;
+  z-index: -99;
+}
