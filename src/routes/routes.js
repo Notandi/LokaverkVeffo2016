@@ -54,6 +54,7 @@ router.get('/genres', cache('5 minutes'), (req, res, next) =>{
 
 //TMDB sækja gögn um mynd
 router.post('/movie', cache('5 minutes'), function (req, res, next) {
+  let id = req.body.tala;
   moviedata.movie(id)
     .then((result) => {
       const movie = result.data;
