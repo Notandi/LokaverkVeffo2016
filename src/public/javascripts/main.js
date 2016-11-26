@@ -1,8 +1,5 @@
 $(document).ready(function() {
   getMovies();
-  console.log("main.js fallið whats up in this biatch??!!");
-  let tala = 550;
-  getMovie({tala});
 
   // breytir um myndir yfir í myndir sem eru væntanlegar þegar að ýtt er á "Væntanlegt" takkan
   $('#playingNow').click(() => {
@@ -17,18 +14,6 @@ $(document).ready(function() {
   });
 });
 
-//THE MOVIE DATABASE functions
-let movie = [];
-function getMovie(movieId) {
-  $.post('/movie', movieId, function(resp) {
-    movie = resp;
-    displayMovie(resp);
-  });
-}
-
-function createMovie(){
-  const sitecontent= $('#movieContent')
-}
 
 // fjarlægir allt úr content divinu og setur spinner í gang
 function loading(){
