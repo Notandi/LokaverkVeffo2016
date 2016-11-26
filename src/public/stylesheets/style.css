@@ -11,7 +11,7 @@ body {
   padding : 2%;
 }
 .spinner {
-  
+
   height: 28px;
   width: 28px;
   animation: rotate 0.8s infinite linear;

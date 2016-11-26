@@ -44,6 +44,7 @@ function showMovies(movieData){
     } else{
       link.attr('href','http://localhost:3000/movie/' + movieData[i].ids.imdb);
     }
+    link.click(() => {loading();});
     const moviePoster = $('<img>');
     moviePoster.attr('class','poster');
     moviePoster.attr('alt','text');

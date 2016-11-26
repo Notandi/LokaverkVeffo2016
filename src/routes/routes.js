@@ -50,19 +50,26 @@ router.get('/genres', cache('5 minutes'), (req, res, next) =>{
     })
     .catch((error) => {
     });
-})
+});
 
-//TMDB sækja gögn um mynd
-router.post('/movie', cache('5 minutes'), function (req, res, next) {
-  let id = req.body.tala;
-  moviedata.movie(id)
+router.get('/simplemovie/:id', cache('5 minutes'), (req, res, next) => {
+  const id = req.params.id;
+  console.log(id);
+  let movieData;
+  let movie;
+  movies.movies()
     .then((result) => {
-      const movie = result.data;
-      res.send(movie);
+      movieData = result.data;
+      for (let i = 0; i < movieData.length; i++){
+        if (id == movieData[i].id){
+          movie = movieData[i];
+          console.log(movie);
+          res.render('simplemovie',{movie});
+        }
+      }
     })
     .catch((error) => {
-      console.log('Error router.post /movie');
-      console.log(error);
+
     });
 });
 
