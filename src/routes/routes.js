@@ -1,17 +1,21 @@
 /* routes hér */
 const express = require('express');
 
+const apicache = require('apicache');
+
 const router = express.Router();
 
 const movies = require('../axios/movies');
 
 const moviedata = require('../axios/moviedata');
 
+let cache = apicache.middleware;
+
 router.get('/', (req, res, next) => {
   res.render('index');
 });
 //Sækir myndir frá kvikmyndir API
-router.get('/movies', (req, res, next) => {
+router.get('/movies', cache('5 minutes'), (req, res, next) => {
   movies.movies()
     .then((result) => {
       res.send(result.data);
@@ -20,7 +24,7 @@ router.get('/movies', (req, res, next) => {
     });
 });
 //kvikmyndir API
-router.get('/upcoming', (req, res, next) => {
+router.get('/upcoming', cache('5 minutes'), (req, res, next) => {
   movies.upcoming()
     .then((result) => {
       res.send(result.data);
@@ -30,7 +34,7 @@ router.get('/upcoming', (req, res, next) => {
 });
 
 //kvikmyndir API
-router.get('/cinemas', (req, res, next) => {
+router.get('/cinemas', cache('5 minutes'), (req, res, next) => {
   movies.cinemas()
     .then((result) => {
       res.send(result.data);
@@ -39,7 +43,7 @@ router.get('/cinemas', (req, res, next) => {
     });
 });
 //kvikmyndir API
-router.get('/genres', (req, res, next) =>{
+router.get('/genres', cache('5 minutes'), (req, res, next) =>{
   movies.genres()
     .then((result) =>{
       res.send(result.data);
@@ -49,9 +53,7 @@ router.get('/genres', (req, res, next) =>{
 })
 
 //TMDB sækja gögn um mynd
-router.post('/movie', function (req, res, next) {
-  console.log("/movie routes");
-  let id = req.body.tala;
+router.post('/movie', cache('5 minutes'), function (req, res, next) {
   moviedata.movie(id)
     .then((result) => {
       const movie = result.data;
@@ -64,7 +66,7 @@ router.post('/movie', function (req, res, next) {
 });
 
 //id er IMDB
-router.get('/movie/:id', (req, res, next) => {
+router.get('/movie/:id', cache('5 minutes'), (req, res, next) => {
   //req.params eða req.body?
   console.log('movie/:id fallið kallað!?"');
   console.log(req.params.id);

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  getUpcomingMovies();
+  getMovies();
   console.log("main.js fallið whats up in this biatch??!!");
   let tala = 550;
   getMovie({tala});
@@ -50,13 +50,21 @@ function showMovies(movieData){
   console.log(movieData);
   const sitecontent= $('#content');
   sitecontent.empty();
-  for (let i = 0; i < movieData.length ;i++ ){
+  for (let i = 0; i < movieData.length; i++){
     const movieDiv = $('<div></div>');
     movieDiv.attr('class','col-xs-7 col-sm-5 col-md-4 col-lg-4');
+    const link = $('<a></a>');
+    if(movieData[i].ids.imdb === ""){
+      link.attr('href','http://localhost:3000/simplemovie/' + movieData[i].id);
+    } else{
+      link.attr('href','http://localhost:3000/movie/' + movieData[i].ids.imdb);
+    }
     const moviePoster = $('<img>');
     moviePoster.attr('class','poster');
+    moviePoster.attr('alt','text');
     moviePoster.attr('src',movieData[i].poster);
-    movieDiv.append(moviePoster);
+    link.append(moviePoster);
+    movieDiv.append(link);
     sitecontent.append(movieDiv);
   }
 
