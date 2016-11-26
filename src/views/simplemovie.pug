@@ -1,4 +1,6 @@
 extends layout
-
+block scripts
+  script(src="/javascripts/trailer.js")
 block content
   p #{movie.title}
+  div#player

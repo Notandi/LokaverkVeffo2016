@@ -54,7 +54,6 @@ router.get('/genres', cache('5 minutes'), (req, res, next) =>{
 
 router.get('/simplemovie/:id', cache('5 minutes'), (req, res, next) => {
   const id = req.params.id;
-  console.log(id);
   let movieData;
   let movie;
   movies.movies()
@@ -63,7 +62,6 @@ router.get('/simplemovie/:id', cache('5 minutes'), (req, res, next) => {
       for (let i = 0; i < movieData.length; i++){
         if (id == movieData[i].id){
           movie = movieData[i];
-          console.log(movie);
           res.render('simplemovie',{movie});
         }
       }
