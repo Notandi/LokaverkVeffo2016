@@ -2,7 +2,7 @@ const axios = require('axios');
 
 const baseURL = process.env.BASEURL2; // Sækja úr environment breytu
 
-const timeout = 1000;
+const timeout = 3000;
 
 const api_key = '?api_key=3c8664074077c3ccb04b8bd51b3c9167';
 

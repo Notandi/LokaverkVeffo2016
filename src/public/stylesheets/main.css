@@ -1,22 +1,91 @@
 body {
   background: black; 
 }
-p {
-  color: white;
+
+#movieContent{
+  position: relative;
 }
 
-.flexContainer {
-  display: flex;
-}
-.textOnImage {
+.wrapper {
   position: absolute;
-  top: 10;
-  width: 100%;
-  color: purple;
+  min-width: 100%;
+  max-width: 98vw;
+  list-style: none;
+
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  /*flex: 100%;*/
+  
+  top: 0;
+  padding: 0;
+  margin: 0;
+  
+  -webkit-flex-flow: row wrap;
+  justify-content: space-around;
 }
 
-.moviesBackground {
+.flex-item {
+  flex-direction: column;
+  /*padding: 0px;
+  width: 100%;
+  height: 150px;
+  margin-top: 0px;*/
+  
+/*  line-height: 100%;
+  color: white;
+  font-weight: bold;
+  font-size: 3em;
+  text-align: center;*/
+}
+
+#leftContainer {
+  flex-direction: column;
+  /*order: 1;*/
+/*  background-color:lavender;">.*/
+  /*flex: 1 0 0*/
+}
+
+#rightContainer {
+  /*order: 2;*/
+  /*background-color:lavenderblush;">.*/
+  /*flex-grow: 2;
+  flex-basis: 50%;*/
+}
+
+.info {
+  color: yellow;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  padding-left: 10%;
+  padding-top: 7%;
+  max-width: 100%;
+  max-height: 100%;
+  padding-right: 20%;
+}
+
+#genreLength {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+}
+/*#runtime {
+	justify-content: flex-end;
+}*/ 
+
+#moviesBackground {
   min-width: 100%;
+  max-width: 98vw;
   position: relative;
   z-index: -99;
+}
+
+#poster {
+  padding-left: 20%;
+  padding-top: 20%;
+  max-width:100%;
+  max-height:100%;
 }

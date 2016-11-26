@@ -2,6 +2,19 @@ extends layout
 
 block content
   #movieContent
-    img(src='https://image.tmdb.org/t/p/w500/' + movie.backdrop_path).moviesBackground
-    .flexContainer
-      p.textOnImage TEXTITEXTITEXTITEXTITEXTITEXTI
+    img(src='https://image.tmdb.org/t/p/w1920/' + movie.backdrop_path)#moviesBackground
+    .wrapper
+      #leftContainer.flex-item.col-sm-4
+        img(src='https://image.tmdb.org/t/p/w500/' + movie.poster_path)#poster
+      #rightContainer.flex-item.col-sm-8
+        .info
+          h1 #{movie.title}
+          #genreLength
+            p Genre: #{movie.genres[0].name}
+            p#runtime Runtime: #{movie.runtime} mins
+          p Release date: #{movie.release_date}
+          p #{movie.tagline}
+          p #{movie.overview}
+          p #{credit.cast}
+
+

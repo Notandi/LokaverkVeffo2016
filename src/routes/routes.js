@@ -79,17 +79,26 @@ router.get('/movie/:id', cache('5 minutes'), (req, res, next) => {
   let id = req.params.id;
 
   //finnd TMDB link út frá imdb
+  let creditInfo = [];
   moviedata.find(id)
     .then((result) => {
       console.log("TMDB ID-IÐ?!!")
       console.log(result.data.movie_results[0].id);
+
+      moviedata.credit(result.data.movie_results[0].id)
+      .then((result) => {
+        creditInfo = result.data
+        console.log(result.data);
+      })
+      .catch((error) => {
+        res.render('error'), {error};
+      });
+
       moviedata.movie(result.data.movie_results[0].id)
         .then((result) => {
-          console.log('results frá TMDb <- IMDb');
-          console.log(result.data);
           var info = result.data;
-          var imgURL = 'https://image.tmdb.org/t/p/w500/';
-          res.render('movie', {movie: info, path: imgURL});
+          var imgURL = 'https://image.tmdb.org/t/p/w1920/';
+          res.render('movie', {movie: info, credit: creditInfo});
         })
         .catch((error) => {
           res.render('error', {error});

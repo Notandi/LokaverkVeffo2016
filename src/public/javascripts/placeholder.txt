@@ -39,3 +39,8 @@ https://image.tmdb.org/t/p/w500/
 https://image.tmdb.org/t/p/w500/
 
   .title .tagline .overview .runtime
+
+  title
+  genre
+  release_date
+  overview:
