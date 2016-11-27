@@ -2,8 +2,14 @@ body {
   background: black; 
 }
 
+p {
+  color: yellow;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
 #movieContent{
   position: relative;
+  overflow: hidden;
 }
 
 .wrapper {
@@ -30,16 +36,6 @@ body {
 
 .flex-item {
   flex-direction: column;
-  /*padding: 0px;
-  width: 100%;
-  height: 150px;
-  margin-top: 0px;*/
-  
-/*  line-height: 100%;
-  color: white;
-  font-weight: bold;
-  font-size: 3em;
-  text-align: center;*/
 }
 
 #leftContainer {
@@ -72,9 +68,8 @@ body {
 	justify-content: space-between;
 
 }
-/*#runtime {
-	justify-content: flex-end;
-}*/ 
+
+
 
 #moviesBackground {
   min-width: 100%;
@@ -88,4 +83,88 @@ body {
   padding-top: 20%;
   max-width:100%;
   max-height:100%;
+}
+
+.creditsSection {
+  position: relative;
+  min-width: 100%;
+  max-width: 98vw;
+  list-style: none;
+
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  /*flex: 100%;*/
+  
+  top: 0;
+  padding: 0;
+  margin: 0;
+
+  padding-left: 10%;
+  padding-right: 20%;
+}
+
+
+.creditsWrapper {
+	display:flex;
+	flex-direction: row;
+	position: relative;
+    min-width: 100%;
+    max-width: 98vw;
+    list-style: none;
+
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    /*flex: 100%;*/
+  
+    top: 0;
+    padding: 0;
+    margin: 0;
+  
+    /*-webkit-flex-flow: row wrap;*/
+    /*justify-content: space-around;*/
+}
+.creditsSection {
+	top:0;
+	left:0;
+	width:100%;
+    height: auto;
+}
+
+#creditList {
+  top: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction:row;
+  justify-content: flex-start;
+}
+.creditItem {
+	display:flex;
+	flex-direction:column;
+	align-self: center;
+}
+.creditText{
+	align-self: center;
+}
+
+.creditPic {
+	border: 10px solid transparent;
+	width:50%;
+	min-height: 100%;
+    height: auto;
+    align-self: center;
+}
+
+.directorSection {
+  top:0;
+  left:0;
+  width:100%;
+  height: auto;
 }

@@ -10,6 +10,8 @@ const movies = require('../axios/movies');
 const moviedata = require('../axios/moviedata');
 
 let cache = apicache.middleware;
+let creditInfo = [];
+let tmdbId = 0;
 
 //
 router.get('/', cache('5 minutes'), (req, res, next) => {
@@ -109,39 +111,43 @@ router.get('/simpleupcomingmovie/:id', cache('5 minutes'), (req, res, next) => {
 //id er IMDB
 router.get('/movie/:id', cache('5 minutes'), (req, res, next) => {
   //req.params eða req.body?
-  console.log('movie/:id fallið kallað!?"');
+  console.log('movie/:id fallið kallað!"');
   console.log(req.params.id);
   let id = req.params.id;
-
-  //finnd TMDB link út frá imdb
-  let creditInfo = [];
+  //finn TMDB link út frá imdb
   moviedata.find(id)
-    .then((result) => {
-      console.log("TMDB ID-IÐ?!!")
-      console.log(result.data.movie_results[0].id);
+  .then((result) => {
+    console.log("fannID");
+    tmdbId = result.data.movie_results[0].id;
 
-      moviedata.credit(result.data.movie_results[0].id)
+    moviedata.credit(tmdbId)
+    .then((result) => {
+      creditInfo = result.data;
+      moviedata.movie(tmdbId)
       .then((result) => {
-        creditInfo = result.data
-        console.log(result.data);
+        var info = result.data;
+        res.render('movie', {movie: info, credit: creditInfo});
       })
       .catch((error) => {
-        res.render('error'), {error};
+        res.render('error movieData.movie failaði(fann samt credits)', {error});
       });
-
-      moviedata.movie(result.data.movie_results[0].id)
-        .then((result) => {
-          var info = result.data;
-          var imgURL = 'https://image.tmdb.org/t/p/w1920/';
-          res.render('movie', {movie: info, credit: creditInfo});
-        })
-        .catch((error) => {
-          res.render('error', {error});
-        });
     })
     .catch((error) => {
-      res.render('error', {error});
+      console.log("fann ekki credits");
+      moviedata.movie(tmdbId)
+      .then((result) => {
+        var info = result.data;
+        res.render('movie', {movie: info});
+      })
+      .catch((error) => {
+        res.render('error movieData.movie failaði(fann ekki heldur credits)', {error});
+      });
     });
+      
+  })
+  .catch((error) => {
+    res.render('error, Fann ekki TMDb ID út frá IMDbid', {error});
+  });
 
   // moviedata.movie(id)
   //   .then((result) => {
@@ -162,6 +168,32 @@ router.get('/movie/:id', cache('5 minutes'), (req, res, next) => {
   //     res.render('error', { title: 'Oh no!', error });
   //   });
 });
+//Sækir uppl um castið og crew
+// function getCredits(id) {
+//   moviedata.credit(id)
+//     .then((result) => {
+//       creditInfo = result.data;
+//       console.log('RESULT DATA cast 0');
+//       console.log(result.data.cast[0]);
+//       getMovie(id);
+//     })
+//     .catch((error) => {
+//       res.render('error getcredits'), {error};
+//     });
+// }
+
+// //Sækir upplýsingar um myndirnar sjálfar
+// function getMovie(id) {
+//   moviedata.movie(id)
+//         .then((result) => {
+//           var info = result.data;
+//           var imgURL = 'https://image.tmdb.org/t/p/w1920/';
+//           res.render('movie', {movie: info, credit: creditInfo});
+//         })
+//         .catch((error) => {
+//           res.render('error', {error});
+//         });
+// }
 
 
 router.get('*', (req, res, next) => {
