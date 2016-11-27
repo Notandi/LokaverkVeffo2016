@@ -1,6 +1,16 @@
 extends layout
 block scripts
   script(src="/javascripts/trailer.js")
+  script(src="/javascripts/movie.js")
 block content
   p #{movie.title}
-  div#player
+  if movie.trailers[0]
+    - var movielink = movie.trailers[0].results
+    each link in movielink
+      div(trailerkey=link.key)(id=link.key).player
+  else
+  - var screeningTimes = movie.showtimes
+  each show in screeningTimes
+    a(cinemaid=show.cinema.id)
+    each showtime in show.schedule
+      a(href=showtime.purchase_url) #{showtime.time}

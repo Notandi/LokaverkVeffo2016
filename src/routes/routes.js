@@ -11,8 +11,12 @@ const moviedata = require('../axios/moviedata');
 
 let cache = apicache.middleware;
 
+//
 router.get('/', (req, res, next) => {
   res.render('index');
+});
+//setja upp þannig að þessi linkur sýni myndir sem eru upcoming
+router.get('/comingsoon', (req, res, next) => {
 });
 //Sækir myndir frá kvikmyndir API
 router.get('/movies', cache('5 minutes'), (req, res, next) => {

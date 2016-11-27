@@ -10,16 +10,22 @@
       const playerVars = {modestbranding: 0, autoplay: 1, showinfo: 0};
       let player;
       function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
-          height: '390',
-          width: '640',
-          videoId: '-CKPj4O5_9s',
-          events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-          },
-          playerVars
-        });
+        let trailers = $('div[trailerkey]');
+        console.log(trailers.length);
+        let list =$('div[trailerkey]').map(function(){return $(this).attr('id');}).get();
+        for (let i = 0; i < list.length; i++){
+          console.log(list[i]);
+          player = new YT.Player(list[i], {
+            height: '1080',
+            width: '1920',
+            videoId: list[i],
+            events: {
+              'onReady': onPlayerReady,
+              'onStateChange': onPlayerStateChange
+            },
+            playerVars
+          });
+        }
       }
 
       // 4. The API will call this function when the video player is ready.
@@ -32,10 +38,10 @@
       //    the player should play for six seconds and then stop.
       let done = false;
       function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING && !done) {
-          setTimeout(stopVideo, 6000);
-          done = true;
-        }
+        // if (event.data == YT.PlayerState.PLAYING && !done) {
+        //   setTimeout(stopVideo, 6000);
+        //   done = true;
+        // }
       }
       function stopVideo() {
         player.stopVideo();
