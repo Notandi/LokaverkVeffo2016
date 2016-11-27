@@ -9,8 +9,3 @@ block content
     each link in movielink
       div(trailerkey=link.key,id=link.key).player
   else
-  - var screeningTimes = movie.showtimes
-  each show in screeningTimes
-    a(cinemaid=show.cinema.id)
-    each showtime in show.schedule
-      a(href=showtime.purchase_url) #{showtime.time}

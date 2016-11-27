@@ -6,6 +6,7 @@ html
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js')
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/main.css')
+    script(src="/javascripts/main.js")
     block scripts
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
   body
@@ -15,7 +16,7 @@ html
           a.navbar-brand Bíómyndir
         div.nav.navbar-nav
           li
-            a.active#playingNow Í bíó
+            a(href='http://localhost:3000/').active#playingNow Í bíó
           li
-            a.active#playingSoon Væntanlegt
+            a(href='http://localhost:3000/comingsoon').active#playingSoon Væntanlegt
     block content

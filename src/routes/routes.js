@@ -12,11 +12,23 @@ const moviedata = require('../axios/moviedata');
 let cache = apicache.middleware;
 
 //
-router.get('/', (req, res, next) => {
-  res.render('index');
+router.get('/', cache('5 minutes'), (req, res, next) => {
+  // res.render('index');
+  movies.movies()
+    .then((result) => {
+      res.render('movies',{movie: result.data});
+    })
+    .catch((error) => {
+    });
 });
 //setja upp þannig að þessi linkur sýni myndir sem eru upcoming
-router.get('/comingsoon', (req, res, next) => {
+router.get('/comingsoon', cache('5 minutes'), (req, res, next) => {
+  movies.upcoming()
+    .then((result) => {
+      res.render('upcomingmovies',{movie: result.data});
+    })
+    .catch((error) => {
+    });
 });
 //Sækir myndir frá kvikmyndir API
 router.get('/movies', cache('5 minutes'), (req, res, next) => {
@@ -67,6 +79,25 @@ router.get('/simplemovie/:id', cache('5 minutes'), (req, res, next) => {
         if (id == movieData[i].id){
           movie = movieData[i];
           res.render('simplemovie',{movie});
+        }
+      }
+    })
+    .catch((error) => {
+
+    });
+});
+
+router.get('/simpleupcomingmovie/:id', cache('5 minutes'), (req, res, next) => {
+  const id = req.params.id;
+  let movieData;
+  let movie;
+  movies.upcoming()
+    .then((result) => {
+      movieData = result.data;
+      for (let i = 0; i < movieData.length; i++){
+        if (id == movieData[i].id){
+          movie = movieData[i];
+          res.render('simpleupcomingmovie',{movie});
         }
       }
     })
