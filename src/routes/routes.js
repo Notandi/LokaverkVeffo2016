@@ -70,17 +70,52 @@ router.get('/genres', cache('5 minutes'), (req, res, next) =>{
     });
 });
 
-router.get('/simplemovie/:id', cache('5 minutes'), (req, res, next) => {
+router.get('/movie/:id', cache('5 minutes'), (req, res, next) => {
   const id = req.params.id;
   let movieData;
-  let movie;
+  let movie_is;
   movies.movies()
     .then((result) => {
       movieData = result.data;
       for (let i = 0; i < movieData.length; i++){
         if (id == movieData[i].id){
-          movie = movieData[i];
-          res.render('simplemovie',{movie});
+          movie_is = movieData[i];
+          let imdb_id = movieData[i].ids.imdb;
+          console.log(imdb_id);
+          moviedata.find(imdb_id)
+          .then((result) => {
+            console.log("fannID");
+            tmdbId = result.data.movie_results[0].id;
+
+            moviedata.credit(tmdbId)
+            .then((result) => {
+              creditInfo = result.data;
+              moviedata.movie(tmdbId)
+              .then((result) => {
+                var info = result.data;
+                console.log("stuff");
+                res.render('simplemovie', {movie_is,movie: info, credit: creditInfo});
+              })
+              .catch((error) => {
+                res.render('error movieData.movie failaði(fann samt credits)', {error});
+              });
+            })
+            .catch((error) => {
+              console.log("fann ekki credits");
+              moviedata.movie(tmdbId)
+              .then((result) => {
+                var info = result.data;
+                res.render('simplemovie', {movie_is,movie: info});
+              })
+              .catch((error) => {
+                res.render('error movieData.movie failaði(fann ekki heldur credits)', {error});
+              });
+            });
+
+          })
+          .catch((error) => {
+            res.render('simpleupcomingmovie',{movie_is});
+          });
         }
       }
     })
@@ -89,17 +124,52 @@ router.get('/simplemovie/:id', cache('5 minutes'), (req, res, next) => {
     });
 });
 
-router.get('/simpleupcomingmovie/:id', cache('5 minutes'), (req, res, next) => {
+router.get('/upcomingmovie/:id', cache('5 minutes'), (req, res, next) => {
   const id = req.params.id;
   let movieData;
-  let movie;
+  let movie_is;
   movies.upcoming()
     .then((result) => {
       movieData = result.data;
       for (let i = 0; i < movieData.length; i++){
         if (id == movieData[i].id){
-          movie = movieData[i];
-          res.render('simpleupcomingmovie',{movie});
+          movie_is = movieData[i];
+          let imdb_id = movieData[i].ids.imdb;
+          console.log(imdb_id);
+          moviedata.find(imdb_id)
+          .then((result) => {
+            console.log("fannID");
+            tmdbId = result.data.movie_results[0].id;
+
+            moviedata.credit(tmdbId)
+            .then((result) => {
+              creditInfo = result.data;
+              moviedata.movie(tmdbId)
+              .then((result) => {
+                var info = result.data;
+                console.log("stuff");
+                res.render('simpleupcomingmovie', {movie_is,movie: info, credit: creditInfo});
+              })
+              .catch((error) => {
+                res.render('error movieData.movie failaði(fann samt credits)', {error});
+              });
+            })
+            .catch((error) => {
+              console.log("fann ekki credits");
+              moviedata.movie(tmdbId)
+              .then((result) => {
+                var info = result.data;
+                res.render('simpleupcomingmovie', {movie_is,movie: info});
+              })
+              .catch((error) => {
+                res.render('error movieData.movie failaði(fann ekki heldur credits)', {error});
+              });
+            });
+
+          })
+          .catch((error) => {
+            res.render('simpleupcomingmovie',{movie_is});
+          });
         }
       }
     })
@@ -107,94 +177,6 @@ router.get('/simpleupcomingmovie/:id', cache('5 minutes'), (req, res, next) => {
 
     });
 });
-
-//id er IMDB
-router.get('/movie/:id', cache('5 minutes'), (req, res, next) => {
-  //req.params eða req.body?
-  console.log('movie/:id fallið kallað!"');
-  console.log(req.params.id);
-  let id = req.params.id;
-  //finn TMDB link út frá imdb
-  moviedata.find(id)
-  .then((result) => {
-    console.log("fannID");
-    tmdbId = result.data.movie_results[0].id;
-
-    moviedata.credit(tmdbId)
-    .then((result) => {
-      creditInfo = result.data;
-      moviedata.movie(tmdbId)
-      .then((result) => {
-        var info = result.data;
-        res.render('movie', {movie: info, credit: creditInfo});
-      })
-      .catch((error) => {
-        res.render('error movieData.movie failaði(fann samt credits)', {error});
-      });
-    })
-    .catch((error) => {
-      console.log("fann ekki credits");
-      moviedata.movie(tmdbId)
-      .then((result) => {
-        var info = result.data;
-        res.render('movie', {movie: info});
-      })
-      .catch((error) => {
-        res.render('error movieData.movie failaði(fann ekki heldur credits)', {error});
-      });
-    });
-      
-  })
-  .catch((error) => {
-    res.render('error, Fann ekki TMDb ID út frá IMDbid', {error});
-  });
-
-  // moviedata.movie(id)
-  //   .then((result) => {
-  //     const info = result.data;
-  //     res.render('movie', {film : info});
-  //   })
-  //   .catch((error) => {
-  //     res.render('error', {error});
-  //   });
-
-  // const fyrirsogn = texti + req.params.name;
-  // schedule.channel(req.params.name)
-  //   .then((result) => {
-  //     const dagskra = result.data.results;
-  //     res.render('channel', { title: fyrirsogn, channels: dagskra });
-  //   })
-  //   .catch((error) => {
-  //     res.render('error', { title: 'Oh no!', error });
-  //   });
-});
-//Sækir uppl um castið og crew
-// function getCredits(id) {
-//   moviedata.credit(id)
-//     .then((result) => {
-//       creditInfo = result.data;
-//       console.log('RESULT DATA cast 0');
-//       console.log(result.data.cast[0]);
-//       getMovie(id);
-//     })
-//     .catch((error) => {
-//       res.render('error getcredits'), {error};
-//     });
-// }
-
-// //Sækir upplýsingar um myndirnar sjálfar
-// function getMovie(id) {
-//   moviedata.movie(id)
-//         .then((result) => {
-//           var info = result.data;
-//           var imgURL = 'https://image.tmdb.org/t/p/w1920/';
-//           res.render('movie', {movie: info, credit: creditInfo});
-//         })
-//         .catch((error) => {
-//           res.render('error', {error});
-//         });
-// }
-
 
 router.get('*', (req, res, next) => {
   res.status(404).render('message', { message: 'oh no!',

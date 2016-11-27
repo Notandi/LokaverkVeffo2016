@@ -2,10 +2,45 @@ extends layout
 block scripts
   script(src="/javascripts/trailer.js")
   script(src="/javascripts/movie.js")
-block content
-  p #{movie.title}
-  if movie.trailers[0]
-    - var movielink = movie.trailers[0].results
+  block content
+    #movieContent
+      img(src='https://image.tmdb.org/t/p/w1920/' + movie.backdrop_path)#moviesBackground
+      .wrapper
+        .posterAndinfo
+          #leftContainer.flex-item.col-sm-4
+            img(src='https://image.tmdb.org/t/p/w500/' + movie.poster_path)#poster
+          #rightContainer.flex-item.col-sm-8
+            .info
+              h1 #{movie.title}
+              #genreLength
+                p Genre: #{movie.genres[0].name}
+                p#runtime Runtime: #{movie.runtime} mins
+              p Release date: #{movie.release_date}
+              p Director: #{credit.crew[1].name}
+              p Writer: #{credit.crew[0].name}
+              p #{movie.tagline}
+              p #{movie.overview}
+        .creditsWrapper
+          .creditsSection
+            ul#creditList
+              li.col-sm-3
+                .creditItem
+                  img(src='https://image.tmdb.org/t/p/w500/' + credit.cast[0].profile_path).creditPic.img-circle
+                  p.creditText #{credit.cast[0].name}
+              li.col-sm-3
+                .creditItem
+                  img(src='https://image.tmdb.org/t/p/w500/' + credit.cast[1].profile_path).creditPic.img-circle
+                  p.creditText #{credit.cast[1].name}
+              li.col-sm-3
+                .creditItem
+                  img(src='https://image.tmdb.org/t/p/w500/' + credit.cast[2].profile_path).creditPic.img-circle
+                  p.creditText #{credit.cast[2].name}
+              li.col-sm-3
+                .creditItem
+                  img(src='https://image.tmdb.org/t/p/w500/' + credit.cast[3].profile_path).creditPic.img-circle
+                  p.creditText #{credit.cast[3].name}
+  if movie_is.trailers[0]
+    - var movielink = movie_is.trailers[0].results
     each link in movielink
       div(trailerkey=link.key,id=link.key).player
   else
