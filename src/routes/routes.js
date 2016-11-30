@@ -24,7 +24,6 @@ router.get('/', cache('5 minutes'), (req, res, next) => {
     });
 });
 
-
 // route sem að sýnir myndir sem eru á leiðinni
 router.get('/comingsoon', cache('5 minutes'), (req, res, next) => {
   movies.upcoming()
@@ -69,10 +68,12 @@ router.get('/movie/:id', cache('5 minutes'), (req, res, next) => {
         }
       }
       if (imdbId === null){
+        res.render('simplemovie', movieIs);
+      } else if(movieIs === null){
+
         res.status(404).render('message', { message: 'Þú ert á villigötum þetta er ekki rétt slóð',
           error: 'Error: Request failed with status code 404' });
-      } else if(movieIs === null){
-        //rendera simple mynd
+
 
       } else {
         moviedata.find(imdbId)
@@ -98,8 +99,7 @@ router.get('/movie/:id', cache('5 minutes'), (req, res, next) => {
             });
         })
         .catch((error) => {
-          res.status(404).render('message', { message: 'Eitthvað fór úrskeiðis vinsamlegast reyndu aftur',
-            error: 'Error: Request failed with status code 404' });
+          res.render('simplemovie', { movieIs });
         });
       }
     })

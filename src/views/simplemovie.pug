@@ -1,0 +1,28 @@
+extends layout
+block scripts
+  script(src="/javascripts/trailer.js")
+  script(src="/javascripts/movie.js")
+block content
+  #movieContent
+    img(src='/images/no-poster.png')#moviesBackground
+    .wrapper
+      .posterAndinfo
+        #leftContainer.flex-item.col-sm-4
+          img(src= movieIs.poster)#poster
+        #rightContainer.flex-item.col-sm-8
+          .info
+            h1 #{movieIs.title}
+            #genreLength
+              p#runtime Runtime: #{movieIs.durationMinutes} mins
+            p Director: #{movieIs.directors_abridged[0].name}
+            p #{movieIs.plot}
+  - var screeningTimes = movieIs.showtimes
+  each show in screeningTimes
+    a(cinemaid=show.cinema.id)
+    each showtime in show.schedule
+      a(href=showtime.purchase_url) #{showtime.time}
+  if movieIs.trailers[0]
+    - var movielink = movieIs.trailers[0].results
+    each link in movielink
+      div(trailerkey=link.key,id=link.key).player
+  else
