@@ -74,7 +74,7 @@ router.get('/movie/:id', cache('5 minutes'), (req, res, next) => {
             moviedata.credit(tmdbID)
                 .then((result) => {
                   creditTmdb = result.data;
-                  res.render('simplemovie',
+                  res.render('movie',
                   { movieIs, movie: movieTmdb, credit: creditTmdb });
                 })
                 .catch((error) => {
@@ -121,7 +121,7 @@ router.get('/upcomingmovie/:id', cache('5 minutes'), (req, res, next) => {
             moviedata.credit(tmdbID)
                 .then((result) => {
                   creditTmdb = result.data;
-                  res.render('simpleupcomingmovie',
+                  res.render('upcomingmovie',
                   { movieIs, movie: movieTmdb, credit: creditTmdb });
                 })
                 .catch((error) => {
