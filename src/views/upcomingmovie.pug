@@ -4,11 +4,17 @@ block scripts
   script(src="/javascripts/movie.js")
 block content
   #movieContent
-    img(src='https://image.tmdb.org/t/p/w1920/' + movie.backdrop_path)#moviesBackground
+    if(movie.backdrop_path)
+      img(src='https://image.tmdb.org/t/p/w1920/' + movie.backdrop_path)#moviesBackground
+    else
+      img(src='/images/simpleBG.jpg')#moviesBackground
     .wrapper
       .posterAndinfo
         #leftContainer.flex-item.col-sm-4
-          img(src='https://image.tmdb.org/t/p/w500/' + movie.poster_path)#poster
+          if (movie.poster_path)
+            img(src='https://image.tmdb.org/t/p/w500/' + movie.poster_path)#poster
+          else
+            img(src='/images/no-poster.png')#poster
         #rightContainer.flex-item.col-sm-8
           .info
             h1 #{movie.title}
@@ -25,19 +31,31 @@ block content
           ul#creditList
             li.col-sm-3
               .creditItem
-                img(src='https://image.tmdb.org/t/p/w500/' + credit.cast[0].profile_path).creditPic.img-circle
+                if(credit.cast[0].profile_path)
+                  img(src='https://image.tmdb.org/t/p/w500/' + credit.cast[0].profile_path).creditPic.img-circle
+                else
+                  img(src='/images/no-poster.png').creditPic.img-circle
                 p.creditText #{credit.cast[0].name}
             li.col-sm-3
               .creditItem
-                img(src='https://image.tmdb.org/t/p/w500/' + credit.cast[1].profile_path).creditPic.img-circle
+                if(credit.cast[1].profile_path)
+                  img(src='https://image.tmdb.org/t/p/w500/' + credit.cast[1].profile_path).creditPic.img-circle
+                else
+                  img(src='/images/no-poster.png').creditPic.img-circle
                 p.creditText #{credit.cast[1].name}
             li.col-sm-3
               .creditItem
-                img(src='https://image.tmdb.org/t/p/w500/' + credit.cast[2].profile_path).creditPic.img-circle
+                if(credit.cast[2].profile_path)
+                  img(src='https://image.tmdb.org/t/p/w500/' + credit.cast[2].profile_path).creditPic.img-circle
+                else
+                  img(src='/images/no-poster.png').creditPic.img-circle
                 p.creditText #{credit.cast[2].name}
             li.col-sm-3
               .creditItem
-                img(src='https://image.tmdb.org/t/p/w500/' + credit.cast[3].profile_path).creditPic.img-circle
+                if(credit.cast[3].profile_path)
+                  img(src='https://image.tmdb.org/t/p/w500/' + credit.cast[3].profile_path).creditPic.img-circle
+                else
+                  img(src='/images/no-poster.png').creditPic.img-circle
                 p.creditText #{credit.cast[3].name}
   if movieIs.trailers[0]
     - var movielink = movieIs.trailers[0].results
