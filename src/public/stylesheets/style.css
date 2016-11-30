@@ -13,6 +13,7 @@ body {
   /*336*/
   /*519*/
   padding : 2%;
+  text-align: center;
 }
 .spinner {
 
@@ -30,4 +31,74 @@ body {
 @keyframes rotate {
   0%    { transform: rotate(0deg); }
   100%  { transform: rotate(360deg); }
+}
+
+
+
+.image-hover-text-container
+{
+  position: relative;
+  display: inline-block;
+  width: auto;
+  height: auto;
+  transition: all 0.2s linear;
+}
+
+.image-hover-image
+{
+ display: block;
+}
+/* Make the image round */
+.image-hover-image img
+{
+  border-radius: 0%;
+  width: 224px;
+}
+
+
+
+.image-hover-text
+{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  opacity: 0;
+  cursor: default;
+  transition: opacity 0.2s linear;
+}
+.image-hover-text:hover
+{
+  opacity: 1;
+}
+
+
+.image-hover-text-bubble
+{
+  position: relative;
+  box-sizing: border-box;
+  top: 0; left: 0; right: 100%;
+  height: 100%;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 0%;
+  margin: 0 auto;
+  padding: 30% 0px;
+  overflow: hidden;
+  font-size: 17px;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+.image-hover-text-title
+{
+  color: yellow;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.image-hover-text .image-hover-text-title
+{
+  font-size: 25px;
+  display: block;
 }
