@@ -13,11 +13,11 @@ block content
           .info
             h1 #{movie.title}
             #genreLength
-              p Genre: #{movie.genres[0].name}
+              p Genre: #{movieIs.omdb[0].Genre}
               p#runtime Runtime: #{movie.runtime} mins
             p Release date: #{movie.release_date}
-            p Director: #{credit.crew[1].name}
-            p Writer: #{credit.crew[0].name}
+            p Director: #{movieIs.omdb[0].Director}
+            p Writer: #{movieIs.omdb[0].Writer}
             p #{movie.tagline}
             p #{movie.overview}
       .creditsWrapper
