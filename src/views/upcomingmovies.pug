@@ -10,7 +10,10 @@ block content
           a(href='http://localhost:3000/upcomingmovie/' + moviedata.id).posterlink
             div.image-hover-text-container
               div.image-hover-image
-                img(src=moviedata.poster,alt='text').poster
+                if(moviedata.poster === 'http://kvikmyndir.is/images/poster/')
+                  img(src="/images/no-poster.png",alt='poster').poster
+                else
+                  img(src=moviedata.poster,alt='text').poster
               div.image-hover-text
                 div.image-hover-text-bubble
                   span.image-hover-text-title #{moviedata.title}
