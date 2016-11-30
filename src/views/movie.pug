@@ -14,7 +14,7 @@ block content
           if (movie.poster_path)
             img(src='https://image.tmdb.org/t/p/w500/' + movie.poster_path)#poster
           else
-            img(src='/images/no-poster.png')#poster
+            img(src='/images/no-poster.jpg')#poster
         #rightContainer.flex-item.col-sm-8
           .info
             h1 #{movie.title}
@@ -34,28 +34,28 @@ block content
                 if(credit.cast[0].profile_path)
                   img(src='https://image.tmdb.org/t/p/w500/' + credit.cast[0].profile_path).creditPic.img-circle
                 else
-                  img(src='/images/no-poster.png').creditPic.img-circle
+                  img(src='/images/noActor.jpg').creditPic.img-circle
                 p.creditText #{credit.cast[0].name}
             li.col-sm-3
               .creditItem
                 if(credit.cast[1].profile_path)
                   img(src='https://image.tmdb.org/t/p/w500/' + credit.cast[1].profile_path).creditPic.img-circle
                 else
-                  img(src='/images/no-poster.png').creditPic.img-circle
+                  img(src='/images/noActor.jpg').creditPic.img-circle
                 p.creditText #{credit.cast[1].name}
             li.col-sm-3
               .creditItem
                 if(credit.cast[2].profile_path)
                   img(src='https://image.tmdb.org/t/p/w500/' + credit.cast[2].profile_path).creditPic.img-circle
                 else
-                  img(src='/images/no-poster.png').creditPic.img-circle
+                  img(src='/images/noActor.jpg').creditPic.img-circle
                 p.creditText #{credit.cast[2].name}
             li.col-sm-3
               .creditItem
                 if(credit.cast[3].profile_path)
                   img(src='https://image.tmdb.org/t/p/w500/' + credit.cast[3].profile_path).creditPic.img-circle
                 else
-                  img(src='/images/no-poster.png').creditPic.img-circle
+                  img(src='/images/noActor.jpg').creditPic.img-circle
                 p.creditText #{credit.cast[3].name}
   .showTimesTable.col-xs-7.col-sm-5.col-md-4.col-lg-4
   h3 Sýningartímar

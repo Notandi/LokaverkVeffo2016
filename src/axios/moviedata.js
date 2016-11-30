@@ -19,23 +19,29 @@ const instance = axios.create({ baseURL, timeout });
  * @returns {Promise} - Promise with available channels when resolved
  */
 
+const movieroute = '/movie/';
+
 function find(id) {
   // leitar að tmbd_id útfrá imdb_id sem
   // að fæst útfrá kvimyndir.is apa tt bætt fyrir
   // framan því öll imdb movie id eru með tt fyrir framan
-  return instance.get('/find/' + 'tt' + id +
-  apiKey + '&external_source=imdb_id');
+  const findroute = '/find/';
+  const tt = 'tt';
+  const end = '&external_source=imdb_id';
+  return instance.get(findroute + tt + id + apiKey + end);
 }
 function movie(id) {
-  return instance.get('/movie/' + id + apiKey);
+  return instance.get(movieroute + id + apiKey);
 }
 
 function recommended(id) {
-  return instance.get('/movie/' + id + '/recommendations' + apiKey);
+  const recommendationsroutes = '/recommendations';
+  return instance.get(movieroute + id + recommendationsroutes + apiKey);
 }
 
 function credit(id) {
-  return instance.get('/movie/' + id + '/credits' + apiKey);
+  const creditroute = '/credits';
+  return instance.get(movieroute + id + creditroute + apiKey);
 }
 
 module.exports = {

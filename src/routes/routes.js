@@ -59,42 +59,46 @@ router.get('/movie/:id', cache('5 minutes'), (req, res, next) => {
   let imdbId;
   let tmdbID;
   movies.movies()
-    .then((result) => {
-      movieData = result.data;
+    .then((result1) => {
+      movieData = result1.data;
       for (let i = 0; i < movieData.length; i++) {
+        /*eslint-disable */
         if (id == movieData[i].id) {
+          /*eslint-enable */
           movieIs = movieData[i];
-          imdbId = movieData[i].ids.imdb
+          imdbId = movieData[i].ids.imdb;
         }
       }
-      if (imdbId === null){
+
+      if (imdbId === null) {
         res.render('simplemovie', movieIs);
-      } else if(movieIs === null){
-
-        res.status(404).render('message', { message: 'Þú ert á villigötum þetta er ekki rétt slóð',
+      } else if (movieIs === null) {
+        res.status(404).render('message', {
+          message: 'Þú ert á villigötum þetta er ekki rétt slóð',
           error: 'Error: Request failed with status code 404' });
-
-
       } else {
         moviedata.find(imdbId)
-        .then((result) => {
-          tmdbID = result.data.movie_results[0].id;
+        .then((result2) => {
+          tmdbID = result2.data.movie_results[0].id;
           moviedata.movie(tmdbID)
-            .then((result) => {
-              movieTmdb = result.data;
+            .then((result3) => {
+              movieTmdb = result3.data;
               moviedata.credit(tmdbID)
-                  .then((result) => {
-                    creditTmdb = result.data;
+                  .then((result4) => {
+                    creditTmdb = result4.data;
                     res.render('movie',
                     { movieIs, movie: movieTmdb, credit: creditTmdb });
                   })
                   .catch((error) => {
-                    res.status(404).render('message', { message: 'Eitthvað fór úrskeiðis vinsamlegast reyndu aftur',
+                    res.status(404).render('message', {
+                      message:
+                      'Eitthvað fór úrskeiðis vinsamlegast reyndu aftur',
                       error: 'Error: Request failed with status code 404' });
                   });
             })
             .catch((error) => {
-              res.status(404).render('message', { message: 'Eitthvað fór úrskeiðis vinsamlegast reyndu aftur',
+              res.status(404).render('message', {
+                message: 'Eitthvað fór úrskeiðis vinsamlegast reyndu aftur',
                 error: 'Error: Request failed with status code 404' });
             });
         })
@@ -104,7 +108,8 @@ router.get('/movie/:id', cache('5 minutes'), (req, res, next) => {
       }
     })
     .catch((error) => {
-      res.status(404).render('message', { message: 'Þú ert á villigötum þetta er ekki rétt slóð',
+      res.status(404).render('message', {
+        message: 'Þú ert á villigötum þetta er ekki rétt slóð',
         error: 'Error: Request failed with status code 404' });
     });
 });
@@ -120,50 +125,56 @@ router.get('/upcomingmovie/:id', cache('5 minutes'), (req, res, next) => {
   let imdbId;
   let tmdbID;
   movies.upcoming()
-    .then((result) => {
-      movieData = result.data;
+    .then((result1) => {
+      movieData = result1.data;
       for (let i = 0; i < movieData.length; i++) {
+        /*eslint-disable */
         if (id == movieData[i].id) {
+          /*eslint-enable */
           movieIs = movieData[i];
           imdbId = movieData[i].ids.imdb;
         }
       }
-      if (imdbId === null){
-        res.status(404).render('message', { message: 'Þú ert á villigötum þetta er ekki rétt slóð',
+      if (imdbId === null) {
+        res.status(404).render('message', {
+          message: 'Þú ert á villigötum þetta er ekki rétt slóð',
           error: 'Error: Request failed with status code 404' });
-      } else if(movieIs === null){
-        //rendera simple mynd
-
+      } else if (movieIs === null) {
+        res.render('simplemovie', movieIs);
       } else {
         moviedata.find(imdbId)
-        .then((result) => {
-          tmdbID = result.data.movie_results[0].id;
+        .then((result2) => {
+          tmdbID = result2.data.movie_results[0].id;
           moviedata.movie(tmdbID)
-            .then((result) => {
-              movieTmdb = result.data;
+            .then((result3) => {
+              movieTmdb = result3.data;
               moviedata.credit(tmdbID)
-                  .then((result) => {
-                    creditTmdb = result.data;
+                  .then((result4) => {
+                    creditTmdb = result4.data;
                     res.render('upcomingmovie',
                     { movieIs, movie: movieTmdb, credit: creditTmdb });
                   })
                   .catch((error) => {
-                    res.status(404).render('message', { message: 'Eitthvað fór úrskeiðis vinsamlegast reyndu aftur',
+                    res.status(404).render('message', {
+                      message:
+                      'Eitthvað fór úrskeiðis vinsamlegast reyndu aftur',
                       error: 'Error: Request failed with status code 404' });
                   });
             })
             .catch((error) => {
-              res.status(404).render('message', { message: 'Eitthvað fór úrskeiðis vinsamlegast reyndu aftur',
+              res.status(404).render('message', {
+                message: 'Eitthvað fór úrskeiðis vinsamlegast reyndu aftur',
                 error: 'Error: Request failed with status code 404' });
             });
         })
         .catch((error) => {
-          // error ef engar upplýsingar frá imdbId
+          res.render('simplemovie', movieIs);
         });
       }
     })
     .catch((error) => {
-      res.status(404).render('message', { message: 'Þú ert á villigötum þetta er ekki rétt slóð',
+      res.status(404).render('message', {
+        message: 'Þú ert á villigötum þetta er ekki rétt slóð',
         error: 'Error: Request failed with status code 404' });
     });
 });
