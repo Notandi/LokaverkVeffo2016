@@ -8,24 +8,19 @@ const timeout = 1000;
 
 let headers;
 
-let instance = axios.create({ baseURL, timeout});
+let instance = axios.create({ baseURL, timeout });
 
 const data = {
-  username: "apameistarinn",
-  password: "gussiskassi",
+  username: 'apameistarinn',
+  password: 'gussiskassi',
 };
 
-const tokenGen = axios.create ({baseURL, timeout});
+const tokenGen = axios.create({ baseURL, timeout });
 
 const timer = new NanoTimer();
 
-let time = '86400s'; //the time we wait before regenrating the api keys
+const time = '86400s'; // the time we wait before regenrating the api keys
 
-// timer fall sem að sækjir nýtt token á 24 tíma fresti
-timer.setInterval(generateNewToken, '', time);
-
-// generatar nýtt token útfrá api key í hvert skipti sem að kveikt er á server
-generateNewToken();
 /**
  * Fetches all available channels from endpoint, returns a promise that when
  * resolved returns an array, e.g.:
@@ -39,11 +34,6 @@ function movies() {
 function upcoming() {
   return instance.get('/upcoming/', headers);
 }
-
-function genres() {
-  return instance.get('/genres', headers);
-}
-
 function cinemas() {
   return instance.get('/theaters', headers);
 }
@@ -52,19 +42,23 @@ function newToken() {
   return tokenGen.post('/authenticate', data);
 }
 
-function generateNewToken(){
+function generateNewToken() {
   newToken()
   .then((result) => {
-    headers = {'x-access-token': result.data.token};
-    instance = axios.create({baseURL, headers});
+    headers = { 'x-access-token': result.data.token };
+    instance = axios.create({ baseURL, headers });
   })
   .catch((error) => {
   });
 }
 
+// generatar nýtt token útfrá api key í hvert skipti sem að kveikt er á server
+generateNewToken();
+// timer fall sem að sækjir nýtt token á 24 tíma fresti
+timer.setInterval(generateNewToken, '', time);
+
 module.exports = {
   movies,
   upcoming,
-  genres,
   cinemas,
 };

@@ -39,8 +39,8 @@ block scripts
                 .creditItem
                   img(src='https://image.tmdb.org/t/p/w500/' + credit.cast[3].profile_path).creditPic.img-circle
                   p.creditText #{credit.cast[3].name}
-  if movie_is.trailers[0]
-    - var movielink = movie_is.trailers[0].results
+  if movieIs.trailers[0]
+    - var movielink = movieIs.trailers[0].results
     each link in movielink
       div(trailerkey=link.key,id=link.key).player
   else

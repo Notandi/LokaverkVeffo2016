@@ -8,6 +8,6 @@ block content
       each moviedata in movie
         div.col-xs-7.col-sm-5.col-md-4.col-lg-4
           a(href='http://localhost:3000/movie/' + moviedata.id).posterlink
-            img(src=moviedata.poster,alt=text).poster
+            img(src=moviedata.poster,alt='text').poster
             p #{moviedata.title}
     div.loading
