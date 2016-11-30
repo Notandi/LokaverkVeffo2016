@@ -19,7 +19,8 @@ router.get('/', cache('5 minutes'), (req, res, next) => {
       res.render('movies', { movie: result.data });
     })
     .catch((error) => {
-      // vantar error ef ekki næst samband við apa
+      res.status(404).render('message', { message: 'oh no!',
+        error: 'Error: Request failed with status code 404' });
     });
 });
 
@@ -31,7 +32,8 @@ router.get('/comingsoon', cache('5 minutes'), (req, res, next) => {
       res.render('upcomingmovies', { movie: result.data });
     })
     .catch((error) => {
-      // vantar error ef ekki næst samband við apa
+      res.status(404).render('message', { message: 'oh no!',
+        error: 'Error: Request failed with status code 404' });
     });
 });
 
@@ -42,7 +44,8 @@ router.get('/cinemas', cache('5 minutes'), (req, res, next) => {
       res.send(result.data);
     })
     .catch((error) => {
-      // vantar error ef engar upplýsingar frá apa
+      res.status(404).render('message', { message: 'oh no!',
+        error: 'Error: Request failed with status code 404' });
     });
 });
 
@@ -62,34 +65,47 @@ router.get('/movie/:id', cache('5 minutes'), (req, res, next) => {
       for (let i = 0; i < movieData.length; i++) {
         if (id == movieData[i].id) {
           movieIs = movieData[i];
-          imdbId = movieData[i].ids.imdb;
+          imdbId = movieData[i].ids.imdb
         }
       }
-      moviedata.find(imdbId)
-      .then((result) => {
-        tmdbID = result.data.movie_results[0].id;
-        moviedata.movie(tmdbID)
-          .then((result) => {
-            movieTmdb = result.data;
-            moviedata.credit(tmdbID)
-                .then((result) => {
-                  creditTmdb = result.data;
-                  res.render('movie',
-                  { movieIs, movie: movieTmdb, credit: creditTmdb });
-                })
-                .catch((error) => {
-                  // vantar errror ef ekkert credit finnst
-                });
-          })
-          .catch((error) => {
-            // vantar error ef myndin finnst ekki
-          });
-      })
-      .catch((error) => {
-        // error ef engar upplýsingar frá imdbId
-      });
+      if (imdbId === null){
+        res.status(404).render('message', { message: 'Þú ert á villigötum þetta er ekki rétt slóð',
+          error: 'Error: Request failed with status code 404' });
+      } else if(movieIs === null){
+        //rendera simple mynd
+
+      } else {
+        moviedata.find(imdbId)
+        .then((result) => {
+          tmdbID = result.data.movie_results[0].id;
+          moviedata.movie(tmdbID)
+            .then((result) => {
+              movieTmdb = result.data;
+              moviedata.credit(tmdbID)
+                  .then((result) => {
+                    creditTmdb = result.data;
+                    res.render('movie',
+                    { movieIs, movie: movieTmdb, credit: creditTmdb });
+                  })
+                  .catch((error) => {
+                    res.status(404).render('message', { message: 'Eitthvað fór úrskeiðis vinsamlegast reyndu aftur',
+                      error: 'Error: Request failed with status code 404' });
+                  });
+            })
+            .catch((error) => {
+              res.status(404).render('message', { message: 'Eitthvað fór úrskeiðis vinsamlegast reyndu aftur',
+                error: 'Error: Request failed with status code 404' });
+            });
+        })
+        .catch((error) => {
+          res.status(404).render('message', { message: 'Eitthvað fór úrskeiðis vinsamlegast reyndu aftur',
+            error: 'Error: Request failed with status code 404' });
+        });
+      }
     })
     .catch((error) => {
+      res.status(404).render('message', { message: 'Þú ert á villigötum þetta er ekki rétt slóð',
+        error: 'Error: Request failed with status code 404' });
     });
 });
 
@@ -112,32 +128,43 @@ router.get('/upcomingmovie/:id', cache('5 minutes'), (req, res, next) => {
           imdbId = movieData[i].ids.imdb;
         }
       }
-      moviedata.find(imdbId)
-      .then((result) => {
-        tmdbID = result.data.movie_results[0].id;
-        moviedata.movie(tmdbID)
-          .then((result) => {
-            movieTmdb = result.data;
-            moviedata.credit(tmdbID)
-                .then((result) => {
-                  creditTmdb = result.data;
-                  res.render('upcomingmovie',
-                  { movieIs, movie: movieTmdb, credit: creditTmdb });
-                })
-                .catch((error) => {
-                  // vantar errror ef ekkert credit finnst
-                });
-          })
-          .catch((error) => {
-            // vantar error ef myndin finnst ekki
-          });
-      })
-      .catch((error) => {
-        // error ef engar upplýsingar frá imdbId
-      });
+      if (imdbId === null){
+        res.status(404).render('message', { message: 'Þú ert á villigötum þetta er ekki rétt slóð',
+          error: 'Error: Request failed with status code 404' });
+      } else if(movieIs === null){
+        //rendera simple mynd
+
+      } else {
+        moviedata.find(imdbId)
+        .then((result) => {
+          tmdbID = result.data.movie_results[0].id;
+          moviedata.movie(tmdbID)
+            .then((result) => {
+              movieTmdb = result.data;
+              moviedata.credit(tmdbID)
+                  .then((result) => {
+                    creditTmdb = result.data;
+                    res.render('upcomingmovie',
+                    { movieIs, movie: movieTmdb, credit: creditTmdb });
+                  })
+                  .catch((error) => {
+                    res.status(404).render('message', { message: 'Eitthvað fór úrskeiðis vinsamlegast reyndu aftur',
+                      error: 'Error: Request failed with status code 404' });
+                  });
+            })
+            .catch((error) => {
+              res.status(404).render('message', { message: 'Eitthvað fór úrskeiðis vinsamlegast reyndu aftur',
+                error: 'Error: Request failed with status code 404' });
+            });
+        })
+        .catch((error) => {
+          // error ef engar upplýsingar frá imdbId
+        });
+      }
     })
     .catch((error) => {
-
+      res.status(404).render('message', { message: 'Þú ert á villigötum þetta er ekki rétt slóð',
+        error: 'Error: Request failed with status code 404' });
     });
 });
 
