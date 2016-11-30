@@ -13,11 +13,11 @@ block content
           .info
             h1 #{movie.title}
             #genreLength
-              p Genre: #{movieIs.omdb[0].Genre}
+              p Genre: #{movie.genres[0].name}
               p#runtime Runtime: #{movie.runtime} mins
             p Release date: #{movie.release_date}
-            p Director: #{movieIs.omdb[0].Director}
-            p Writer: #{movieIs.omdb[0].Writer}
+            p Director: #{credit.crew[1].name}
+            p Writer: #{credit.crew[0].name}
             p #{movie.tagline}
             p #{movie.overview}
       .creditsWrapper
@@ -39,11 +39,6 @@ block content
               .creditItem
                 img(src='https://image.tmdb.org/t/p/w500/' + credit.cast[3].profile_path).creditPic.img-circle
                 p.creditText #{credit.cast[3].name}
-  - var screeningTimes = movieIs.showtimes
-  each show in screeningTimes
-    a(cinemaid=show.cinema.id)
-    each showtime in show.schedule
-      a(href=showtime.purchase_url) #{showtime.time}
   if movieIs.trailers[0]
     - var movielink = movieIs.trailers[0].results
     each link in movielink
