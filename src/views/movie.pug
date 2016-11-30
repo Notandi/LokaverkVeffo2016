@@ -8,7 +8,7 @@ block content
     .wrapper
       .posterAndinfo
         #leftContainer.flex-item.col-sm-4
-          img(src='https://image.tmdb.org/t/p/w500/' + movie.poster_path)#poster
+          img(src='https://image.tmdb.org/t/p/w500/' + movie.poster_path)#poster.img-rounded
         #rightContainer.flex-item.col-sm-8
           .info
             h1 #{movie.title}
@@ -39,14 +39,19 @@ block content
               .creditItem
                 img(src='https://image.tmdb.org/t/p/w500/' + credit.cast[3].profile_path).creditPic.img-circle
                 p.creditText #{credit.cast[3].name}
-  .showTimesTable
-    - var screeningTimes = movieIs.showtimes
-    each show in screeningTimes
-      a(cinemaid=show.cinema.id)
-      each showtime in show.schedule
-        a(href=showtime.purchase_url) #{showtime.time}
-    if movieIs.trailers[0]
-      - var movielink = movieIs.trailers[0].results
-      each link in movielink
-        div(trailerkey=link.key,id=link.key).player
-    else
+  .showTimesTable.col-xs-7.col-sm-5.col-md-4.col-lg-4
+  h3 Sýningartímar
+    table.table-responsive
+      - var screeningTimes = movieIs.showtimes
+      each show in screeningTimes
+        tr
+          th
+            a(cinemaid=show.cinema.id)
+            each showtime in show.schedule
+              td
+                a(href=showtime.purchase_url) #{showtime.time}
+  if movieIs.trailers[0]
+    - var movielink = movieIs.trailers[0].results
+    each link in movielink
+      div(trailerkey=link.key,id=link.key).player
+  else
